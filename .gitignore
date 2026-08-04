@@ -49,3 +49,7 @@ build/
 *.log
 *.tmp
 .temp/
+# Local AI runtime state
+.atl/
+# Local CodeGraph index
+.codegraph/

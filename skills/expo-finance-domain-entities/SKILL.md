@@ -1,6 +1,6 @@
 ---
 name: expo-finance-domain-entities
-description: "Trigger: finance domain, entities, transaction, category, budget, reminder, investment, entidades financieras. Create TypeScript domain entities with Zod validation for personal finance apps: transactions, categories, budgets, reminders, investments."
+description: "Trigger: finance domain, entities, transaction, category, budget, reminder, investment, entidades financieras. Create TypeScript domain entities with Zod validation for personal finance apps."
 license: Apache-2.0
 metadata:
   author: "gentle-ai"
@@ -29,16 +29,6 @@ Create finance domain entities when:
 - Create custom error classes for domain validation
 - Separate entity definition from repository interface
 
-## Decision Gates
-
-| Entity | Key Fields |
-|--------|-----------|
-| Transaction | amount, type (income/expense), categoryId, date |
-| Category | name, icon, color, type, parentId (hierarchy) |
-| Budget | categoryId, amount, period, alertThreshold |
-| Reminder | title, amount, frequency, nextDate, payee |
-| Investment | type (DP/FM/stock), amount, currentValue, purchaseDate |
-
 ## Execution Steps
 
 1. Create Transaction entity with Zod schema
@@ -57,51 +47,7 @@ Create finance domain entities when:
 - Use cases for CRUD operations
 - Unit tests for entity validation
 
-## Example
+## References
 
-```typescript
-// domain/entities/Transaction.ts
-import { z } from 'zod';
-
-export const TransactionType = z.enum(['income', 'expense']);
-
-export const TransactionSchema = z.object({
-  id: z.string().uuid(),
-  amount: z.number().positive(),
-  type: TransactionType,
-  categoryId: z.string().uuid(),
-  date: z.coerce.date(),
-  description: z.string().max(500).optional(),
-  tags: z.array(z.string()).default([]),
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
-  deletedAt: z.coerce.date().nullable().default(null),
-});
-
-export type Transaction = z.infer<typeof TransactionSchema>;
-
-// domain/errors.ts
-export class InvalidAmountError extends Error {
-  constructor() {
-    super('Amount must be positive');
-    this.name = 'InvalidAmountError';
-  }
-}
-
-// domain/usecases/CreateTransaction.ts
-export class CreateTransactionUseCase {
-  constructor(private transactionRepository: ITransactionRepository) {}
-
-  async execute(data: CreateTransaction): Promise<Transaction> {
-    if (data.amount <= 0) {
-      throw new InvalidAmountError();
-    }
-
-    if (data.amount > MAX_TRANSACTION_AMOUNT) {
-      throw new AmountExceededError(MAX_TRANSACTION_AMOUNT);
-    }
-
-    return this.transactionRepository.create(data);
-  }
-}
-```
+- `references/example.md` — complete code example.
+- `references/entity-fields.md` — per-entity field reference.
