@@ -65,3 +65,31 @@ If information is missing, ask questions before continuing.
 - **Offline First**: SQLite es la fuente de verdad, Supabase es backup/sync.
 - **Personal App**: No sobre-ingenierizar. Si una solución simple funciona, úsala.
 - **Feature-first structure**: El código de una feature vive junto, no disperso por capas.
+
+## Available Skills
+
+Este proyecto tiene skills específicas en `skills/` que deben usarse cuando apliquen:
+
+### expo-clean-architecture-scaffold
+**Trigger**: Nuevo proyecto Expo, estructura inicial, scaffold
+**Uso**: Crear estructura feature-first con Clean Architecture, TypeScript config, path aliases
+
+### expo-sqlite-supabase-sync
+**Trigger**: SQLite + Supabase, sync offline-first, backup en la nube
+**Uso**: Implementar sincronización offline-first con cola de sync, resolución de conflictos, background sync
+
+### expo-local-notifications-crud
+**Trigger**: Notificaciones locales, recordatorios, pagos recurrentes
+**Uso**: CRUD de recordatorios con triggers diarios/semanales/mensuales, persistencia en SQLite
+
+### react-native-theme-toggle
+**Trigger**: Dark mode, toggle de tema, tema claro/oscuro/sistema
+**Uso**: Toggle 3-estados con Zustand, persistencia en AsyncStorage, StatusBar dinámica
+
+### expo-gifted-charts-dashboard
+**Trigger**: Gráficos, dashboard, visualización de datos, pie chart
+**Uso**: Dashboard con react-native-gifted-charts, componentes tematizados, paleta de colores
+
+### expo-finance-domain-entities
+**Trigger**: Entidades de dominio, finanzas, transacciones, categorías, recordatorios
+**Uso**: Entidades TypeScript con validación Zod para apps de finanzas personales
