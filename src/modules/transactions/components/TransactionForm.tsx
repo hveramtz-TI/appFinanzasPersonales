@@ -3,11 +3,11 @@ import { View, StyleSheet } from 'react-native';
 import { useTheme } from '../../../shared/theme';
 import { Text, Input, Button } from '../../../shared/components';
 import { Category } from '../../../domain/entities/Category';
-import { CreateTransaction } from '../../../domain/entities/Transaction';
+import { CreateTransaction, Transaction } from '../../../domain/entities/Transaction';
 
 interface TransactionFormProps {
   categories: Category[];
-  onSubmit: (data: CreateTransaction) => Promise<void>;
+  onSubmit: (data: CreateTransaction) => Promise<Transaction | undefined>;
   onCancel: () => void;
 }
 

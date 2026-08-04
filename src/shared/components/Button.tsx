@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator, ViewStyle, TextStyle } from 'react-native';
-import { useTheme } from '../../theme';
+import { useTheme } from '../theme';
 
 interface ButtonProps {
   title: string;
@@ -10,6 +10,8 @@ interface ButtonProps {
   loading?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }
 
 export function Button({
@@ -20,6 +22,8 @@ export function Button({
   loading = false,
   style,
   textStyle,
+  accessibilityLabel,
+  accessibilityHint,
 }: ButtonProps) {
   const { theme } = useTheme();
 
@@ -59,6 +63,8 @@ export function Button({
       ]}
       onPress={onPress}
       disabled={disabled || loading}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
       activeOpacity={0.7}
     >
       {loading ? (

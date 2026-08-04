@@ -4,6 +4,8 @@ import { ITransactionRepository, DateRange, CategoryBreakdown } from '../reposit
 import { ICategoryRepository } from '../repositories/ICategoryRepository';
 import { DEFAULT_CATEGORY_NAME } from '../../shared/constants/business';
 
+export type { CategoryBreakdown } from '../repositories/ITransactionRepository';
+
 export interface DashboardData {
   totalIncome: number;
   totalExpense: number;

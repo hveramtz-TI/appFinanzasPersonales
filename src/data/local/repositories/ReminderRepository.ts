@@ -1,8 +1,8 @@
 import * as SQLite from 'expo-sqlite';
-import { Reminder, CreateReminder, UpdateReminder, ReminderSchema } from '../../domain/entities/Reminder';
-import { IReminderRepository } from '../../domain/repositories/IReminderRepository';
-import { EntityNotFoundError } from '../../domain/errors';
-import { ReminderMapper, ReminderRow } from '../mappers/ReminderMapper';
+import { Reminder, CreateReminder, UpdateReminder, ReminderSchema } from '../../../domain/entities/Reminder';
+import { IReminderRepository } from '../../../domain/repositories/IReminderRepository';
+import { EntityNotFoundError } from '../../../domain/errors';
+import { ReminderMapper, ReminderRow } from '../../mappers/ReminderMapper';
 
 export class ReminderRepository implements IReminderRepository {
   constructor(private db: SQLite.SQLiteDatabase) {}

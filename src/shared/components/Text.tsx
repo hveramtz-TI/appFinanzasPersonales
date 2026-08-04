@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text as RNText, TextProps as RNTextProps, StyleSheet } from 'react-native';
-import { useTheme } from '../../theme';
+import { useTheme } from '../theme';
 
 interface TextProps extends RNTextProps {
   variant?: 'h1' | 'h2' | 'h3' | 'body' | 'caption';
-  color?: 'primary' | 'secondary' | 'disabled';
+  color?: 'primary' | 'secondary' | 'disabled' | 'error';
 }
 
 export function Text({
@@ -24,6 +24,8 @@ export function Text({
         return { color: theme.textSecondary };
       case 'disabled':
         return { color: theme.textDisabled };
+      case 'error':
+        return { color: theme.error };
       default:
         return { color: theme.text };
     }

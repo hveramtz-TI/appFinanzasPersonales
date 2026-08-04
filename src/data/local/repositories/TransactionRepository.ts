@@ -1,8 +1,8 @@
 import * as SQLite from 'expo-sqlite';
-import { Transaction, CreateTransaction, UpdateTransaction, TransactionSchema } from '../../domain/entities/Transaction';
-import { ITransactionRepository, TransactionFilters, DateRange, MonthlyTotal, CategoryBreakdown } from '../../domain/repositories/ITransactionRepository';
-import { EntityNotFoundError } from '../../domain/errors';
-import { TransactionMapper, TransactionRow } from '../mappers/TransactionMapper';
+import { Transaction, CreateTransaction, UpdateTransaction, TransactionSchema } from '../../../domain/entities/Transaction';
+import { ITransactionRepository, TransactionFilters, DateRange, MonthlyTotal, CategoryBreakdown } from '../../../domain/repositories/ITransactionRepository';
+import { EntityNotFoundError } from '../../../domain/errors';
+import { TransactionMapper, TransactionRow } from '../../mappers/TransactionMapper';
 
 interface MonthlyTotalRow {
   month: string;
@@ -207,7 +207,7 @@ export class TransactionRepository implements ITransactionRepository {
   }
 
   private async getCategoryBreakdownRows(dateRange: DateRange): Promise<CategoryBreakdownRow[]> {
-    return this.db.getAllAsync(
+    return (await this.db.getAllAsync(
       `SELECT
         t.categoryId,
         c.name as categoryName,
@@ -221,6 +221,6 @@ export class TransactionRepository implements ITransactionRepository {
        GROUP BY t.categoryId
        ORDER BY amount DESC`,
       [dateRange.startDate.getTime(), dateRange.endDate.getTime()]
-    ) as CategoryBreakdownRow[];
+    )) as CategoryBreakdownRow[];
   }
 }

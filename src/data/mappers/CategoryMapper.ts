@@ -1,4 +1,5 @@
 import { Category } from '../../domain/entities/Category';
+import { TransactionType } from '../../domain/entities/Transaction';
 import { EntityNotFoundError } from '../../domain/errors';
 
 export interface CategoryRow {
@@ -36,7 +37,7 @@ export class CategoryMapper {
       name: row.name,
       icon: row.icon,
       color: row.color,
-      type: row.type,
+      type: TransactionType.parse(row.type),
       parentId: row.parentId ?? null,
       order: row.order,
       isActive: row.isActive === 1,

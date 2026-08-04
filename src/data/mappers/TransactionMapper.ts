@@ -1,4 +1,4 @@
-import { Transaction } from '../../domain/entities/Transaction';
+import { Transaction, TransactionType } from '../../domain/entities/Transaction';
 import { EntityNotFoundError } from '../../domain/errors';
 
 export interface TransactionRow {
@@ -38,7 +38,7 @@ export class TransactionMapper {
     return {
       id: row.id,
       amount: row.amount,
-      type: row.type,
+      type: TransactionType.parse(row.type),
       categoryId: row.categoryId,
       accountId: row.accountId ?? undefined,
       date: new Date(row.date),

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from '../../../shared/theme';
 import { Text, Input, Button } from '../../../shared/components';
-import { CreateReminder, ReminderFrequency } from '../../../domain/entities/Reminder';
+import { CreateReminder, Reminder, ReminderFrequency } from '../../../domain/entities/Reminder';
 
 interface ReminderFormProps {
-  onSubmit: (data: CreateReminder) => Promise<void>;
+  onSubmit: (data: CreateReminder) => Promise<Reminder | undefined>;
   onCancel: () => void;
 }
 

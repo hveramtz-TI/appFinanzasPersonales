@@ -1,6 +1,6 @@
 import React from 'react';
-import { TextInput, StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { useTheme } from '../../theme';
+import { TextInput, TextInputProps, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { useTheme } from '../theme';
 
 interface InputProps {
   value: string;
@@ -8,6 +8,8 @@ interface InputProps {
   placeholder?: string;
   secureTextEntry?: boolean;
   keyboardType?: 'default' | 'numeric' | 'email-address' | 'phone-pad';
+  autoCapitalize?: TextInputProps['autoCapitalize'];
+  autoComplete?: TextInputProps['autoComplete'];
   multiline?: boolean;
   numberOfLines?: number;
   style?: ViewStyle;
@@ -21,6 +23,8 @@ export function Input({
   placeholder,
   secureTextEntry = false,
   keyboardType = 'default',
+  autoCapitalize,
+  autoComplete,
   multiline = false,
   numberOfLines = 1,
   style,
@@ -47,6 +51,8 @@ export function Input({
       placeholderTextColor={theme.textDisabled}
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType}
+      autoCapitalize={autoCapitalize}
+      autoComplete={autoComplete}
       multiline={multiline}
       numberOfLines={numberOfLines}
       textAlignVertical={multiline ? 'top' : 'center'}

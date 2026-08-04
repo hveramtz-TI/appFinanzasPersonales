@@ -1,4 +1,4 @@
-import { Reminder } from '../../domain/entities/Reminder';
+import { Reminder, ReminderFrequency } from '../../domain/entities/Reminder';
 import { EntityNotFoundError } from '../../domain/errors';
 
 export interface ReminderRow {
@@ -41,7 +41,7 @@ export class ReminderMapper {
       id: row.id,
       title: row.title,
       amount: row.amount,
-      frequency: row.frequency,
+      frequency: ReminderFrequency.parse(row.frequency),
       nextDate: new Date(row.nextDate),
       categoryId: row.categoryId ?? undefined,
       payee: row.payee ?? undefined,

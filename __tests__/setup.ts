@@ -52,5 +52,11 @@ jest.mock('react-native-gifted-charts', () => ({
 
 // Global setup
 global.crypto = {
-  randomUUID: () => 'test-uuid-' + Math.random().toString(36).substr(2, 9),
-};
+  randomUUID: () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (char) => {
+      const random = (Math.random() * 16) | 0;
+      const value = char === 'x' ? random : (random & 0x3) | 0x8;
+      return value.toString(16);
+    }) as `${string}-${string}-${string}-${string}-${string}`;
+  },
+} as Crypto;

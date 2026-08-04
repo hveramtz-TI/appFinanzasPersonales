@@ -1,9 +1,9 @@
 import * as SQLite from 'expo-sqlite';
-import { Category, CreateCategory, UpdateCategory, CategorySchema } from '../../domain/entities/Category';
-import { TransactionType } from '../../domain/entities/Transaction';
-import { ICategoryRepository } from '../../domain/repositories/ICategoryRepository';
-import { EntityNotFoundError } from '../../domain/errors';
-import { CategoryMapper, CategoryRow } from '../mappers/CategoryMapper';
+import { Category, CreateCategory, UpdateCategory, CategorySchema } from '../../../domain/entities/Category';
+import { TransactionType } from '../../../domain/entities/Transaction';
+import { ICategoryRepository } from '../../../domain/repositories/ICategoryRepository';
+import { EntityNotFoundError } from '../../../domain/errors';
+import { CategoryMapper, CategoryRow } from '../../mappers/CategoryMapper';
 
 export class CategoryRepository implements ICategoryRepository {
   constructor(private db: SQLite.SQLiteDatabase) {}
