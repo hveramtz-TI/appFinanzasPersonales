@@ -23,17 +23,15 @@ App móvil personal de finanzas, React Native + Expo (**Expo Go**, sin dev build
 ### Fase 1 — MVP
 
 - Setup del proyecto (Expo + estructura Clean Architecture)
-- **Testing**: Jest + React Native Testing Library (solo tests unitarios de lógica de negocio)
 - Auth simple + SQLite local + sync básico a Supabase
 - Toggle claro/oscuro
 - Registro manual de gastos e ingresos (con etiquetas/categorías)
 - Dashboard: gráfico de torta (distribución de gastos por etiqueta vs ingresos)
 - Notificaciones: recordatorio diario + CRUD de recordatorios propios (ej. mensualidad de crédito)
 
-**Scope de tests unitarios:**
-- Domain entities (validación con Zod)
-- Use cases (lógica de negocio)
-- Hooks críticos (ej. useReminders, useThemeMode)
+**Testing (implementación diferida):**
+- ✅ Tests de domain entities completados (Transaction, Category, Reminder con validación Zod)
+- ⏳ Tests de use cases, hooks críticos y reglas de negocio: se implementarán cuando se revisen las reglas de negocio específicas de cada módulo
 - NO tests de UI/screens (demasiado setup, poco valor en MVP)
 
 ### Fase 2 — Finanzas e Ingresos
