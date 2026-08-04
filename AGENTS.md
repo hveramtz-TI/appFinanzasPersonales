@@ -35,8 +35,33 @@ If information is missing, ask questions before continuing.
 
 ## Coding
 
+### Core Principles
+
+- **KISS** → Prioriza soluciones simples y claras.
+- **DRY** → Evita duplicación innecesaria.
+- **YAGNI** → No implementes funcionalidades que no se necesitan.
+- **SOLID** → Aplícalo cuando aporte claridad, no como dogma.
+- **Separation of Concerns** → Cada componente debe tener una responsabilidad clara.
+- **High Cohesion / Low Coupling** → Mantén módulos bien definidos y poco dependientes.
+- **Fail Fast** → Detecta y comunica errores lo antes posible.
+- **Clean Code** → Código legible, nombres descriptivos y funciones pequeñas.
+- **Composition over Inheritance** → Prefiere composición cuando sea una mejor opción.
+- **Convention over Configuration** → Sigue las convenciones del lenguaje o framework.
+- **Program to Interfaces** → Depende de abstracciones cuando tenga sentido.
+- **Encapsulation** → Oculta detalles internos y expón solo lo necesario.
+- **Principle of Least Surprise** → El comportamiento del código debe ser predecible.
+- **Boy Scout Rule** → Deja el código mejor de como lo encontraste.
+- **Testing mindset** → Escribe código fácil de probar, aunque no siempre se generen pruebas.
+
+### Architecture & Structure
+
 - Follow Clean Architecture.
-- Prefer SOLID principles.
+- Keep files small and focused.
 - Write maintainable code.
-- Keep files small.
-- Prefer composition over inheritance.
+
+### Project-Specific Constraints
+
+- **Expo Go Compatible**: No usar módulos nativos que requieran dev build.
+- **Offline First**: SQLite es la fuente de verdad, Supabase es backup/sync.
+- **Personal App**: No sobre-ingenierizar. Si una solución simple funciona, úsala.
+- **Feature-first structure**: El código de una feature vive junto, no disperso por capas.
