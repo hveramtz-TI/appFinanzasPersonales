@@ -1,5 +1,7 @@
+import 'react-native-gesture-handler';
 import React, { useEffect, useState, useCallback } from 'react';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider, useTheme } from './src/shared/theme';
 import { RootNavigator } from './src/navigation';
 import { AppInitializer } from './src/application/AppInitializer';
@@ -45,13 +47,18 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+    <GestureHandlerRootView style={styles.root}>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
   loading: {
     flex: 1,
     justifyContent: 'center',
