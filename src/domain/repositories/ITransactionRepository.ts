@@ -39,6 +39,7 @@ export interface ITransactionRepository {
   
   getByCategory(categoryId: string, dateRange?: DateRange): Promise<Transaction[]>;
   getByDateRange(dateRange: DateRange): Promise<Transaction[]>;
+  getByReminderIdAndPeriod(reminderId: string, periodStart: Date, periodEnd: Date): Promise<Transaction[]>;
   getMonthlyTotals(year: number): Promise<MonthlyTotal[]>;
   getCategoryBreakdown(dateRange: DateRange): Promise<CategoryBreakdown[]>;
 }
