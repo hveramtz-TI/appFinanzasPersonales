@@ -9,6 +9,7 @@ export const TransactionSchema = z.object({
   type: TransactionType,
   categoryId: z.string().uuid(),
   accountId: z.string().uuid().optional(),
+  reminderId: z.string().uuid().optional(),
   date: z.coerce.date(),
   description: z.string().max(500).optional(),
   tags: z.array(z.string()).default([]),
