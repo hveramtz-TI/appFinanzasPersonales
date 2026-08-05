@@ -1,3 +1,7 @@
+/**
+ * Domain errors for business logic validation
+ */
+
 export class DomainError extends Error {
   constructor(message: string) {
     super(message);
