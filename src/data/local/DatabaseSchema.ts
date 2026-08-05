@@ -71,6 +71,12 @@ export class DatabaseSchema {
         createdAt INTEGER NOT NULL
       );
     `);
+
+    try {
+      await db.execAsync('ALTER TABLE transactions ADD COLUMN reminderId TEXT');
+    } catch {
+      // Column already exists, ignore
+    }
   }
 
   private static async createIndexes(db: SQLite.SQLiteDatabase): Promise<void> {
@@ -79,6 +85,7 @@ export class DatabaseSchema {
       CREATE INDEX IF NOT EXISTS idx_transactions_categoryId ON transactions(categoryId);
       CREATE INDEX IF NOT EXISTS idx_transactions_type ON transactions(type);
       CREATE INDEX IF NOT EXISTS idx_transactions_deletedAt ON transactions(deletedAt);
+      CREATE INDEX IF NOT EXISTS idx_transactions_reminderId ON transactions(reminderId);
       CREATE INDEX IF NOT EXISTS idx_reminders_nextDate ON reminders(nextDate);
       CREATE INDEX IF NOT EXISTS idx_reminders_isActive ON reminders(isActive);
       CREATE INDEX IF NOT EXISTS idx_categories_type ON categories(type);
