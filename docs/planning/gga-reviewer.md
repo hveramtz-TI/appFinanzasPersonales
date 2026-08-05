@@ -38,10 +38,12 @@ Optimizar el flujo de OpenCode + Gentle Guardian Angel (GGA) para reducir el con
 
 ## Modelo
 
-- **Principal**: North Mini Code Free (`opencode/north-mini-code-free`).
-- **Fallback**: DeepSeek V4 Flash Free (`opencode/deepseek-v4-flash-free`).
+- **Principal**: DeepSeek V4 Flash Free (`opencode/deepseek-v4-flash-free`).
+- **Fallback**: North Mini Code Free (`opencode/north-mini-code-free`).
 
 > Nota: OpenCode no soporta fallback automático de modelo por agente (`model` es un string único). El cambio de fallback es manual y queda documentado como comentario en el agente.
+>
+> **Nota adicional**: `north-mini-code-free` dio error del servidor durante las pruebas, por lo que se cambió a `deepseek-v4-flash-free` como modelo principal.
 
 ## Contexto investigado
 
@@ -88,6 +90,7 @@ El formato de salida requerido (`[STATUS]: APPROVED | REJECTED`) no es parseado 
 | 2 | `~/.config/opencode/agents/gga-reviewer.md` | Crear el perfil del agente |
 | 3 | `.gga` (raíz del proyecto) | `RULES_FILE="GGA-RULES.md"` y descomentar `OPENCODE_AGENT="gga-reviewer"` |
 | 4 | `~/.local/bin/gga` | Ampliar regex de `parse_review_status()` |
+| 5 | `~/.local/share/gga/lib/providers.sh` | Fix: agregar prefijo `opencode/` al modelo cuando no lo tiene |
 
 ### Detalle del cambio en el parser (archivo 4)
 
@@ -105,6 +108,23 @@ El regex original queda intacto y acepta ambos formatos:
 
 - Original: `STATUS: PASSED` / `STATUS: FAILED`
 - Nuevo: `[STATUS]: APPROVED` / `[STATUS]: REJECTED`
+
+### Detalle del fix en providers.sh (archivo 5)
+
+GGA extraía el modelo del provider (ej: `deepseek-v4-flash-free` de `opencode:deepseek-v4-flash-free`) pero lo pasaba sin el prefijo a `opencode run --model`, que espera el formato completo `provider/model`.
+
+Fix: agregar prefijo `opencode/` si el modelo no contiene `/`:
+
+```bash
+# Add provider prefix if model is specified without it
+if [[ -n "$model" && "$model" != */* ]]; then
+  model="opencode/$model"
+fi
+```
+
+Aplicado en dos lugares de `providers.sh`:
+- Función `execute_opencode()` (línea ~383)
+- Bloque de timeout en `execute_provider_with_timeout()` (línea ~1248)
 
 ## Contenido de GGA-RULES.md
 
@@ -205,8 +225,9 @@ Sé breve: máximo 10 líneas en total.
 
 Post-implementación:
 
-1. Correr `gga run` con archivos staged → debe parsear `[STATUS]: APPROVED` correctamente.
-2. Confirmar que los agentes principales de desarrollo (`build`/`plan`/SDD) siguen funcionando (no se tocan).
+1. ✅ Correr `gga run` con archivos staged → parsea `[STATUS]: APPROVED` correctamente.
+2. ✅ Commit exitoso con el nuevo perfil (`b8dd1e5`).
+3. Confirmar que los agentes principales de desarrollo (`build`/`plan`/SDD) siguen funcionando (no se tocan).
 
 ## No-goals
 

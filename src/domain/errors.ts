@@ -1,5 +1,6 @@
 /**
  * Domain errors for business logic validation
+ * These errors represent business rule violations
  */
 
 export class DomainError extends Error {
