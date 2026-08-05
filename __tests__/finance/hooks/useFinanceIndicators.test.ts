@@ -39,6 +39,7 @@ function createMockRepository(
     delete: jest.fn().mockRejectedValue(new Error('Not implemented')),
     getByCategory: jest.fn().mockResolvedValue([]),
     getByDateRange: jest.fn().mockResolvedValue([]),
+    getByReminderIdAndPeriod: jest.fn().mockResolvedValue([]),
     getMonthlyTotals: jest.fn().mockResolvedValue([]),
     getCategoryBreakdown: jest.fn().mockResolvedValue([]),
     ...overrides,
