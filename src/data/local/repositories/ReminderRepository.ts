@@ -3,6 +3,7 @@ import { Reminder, CreateReminder, UpdateReminder, ReminderSchema } from '../../
 import { IReminderRepository } from '../../../domain/repositories/IReminderRepository';
 import { EntityNotFoundError } from '../../../domain/errors';
 import { ReminderMapper, ReminderRow } from '../../mappers/ReminderMapper';
+import { generateUUID } from '../../../shared/utils/uuid';
 
 export class ReminderRepository implements IReminderRepository {
   constructor(private db: SQLite.SQLiteDatabase) {}
@@ -40,7 +41,7 @@ export class ReminderRepository implements IReminderRepository {
   }
 
   async create(reminder: CreateReminder): Promise<Reminder> {
-    const id = crypto.randomUUID();
+    const id = generateUUID();
     const now = new Date();
     const fullReminder = ReminderSchema.parse({
       ...reminder,

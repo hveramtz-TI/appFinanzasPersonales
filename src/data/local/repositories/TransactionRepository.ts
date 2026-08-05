@@ -3,6 +3,7 @@ import { Transaction, CreateTransaction, UpdateTransaction, TransactionSchema } 
 import { ITransactionRepository, TransactionFilters, DateRange, MonthlyTotal, CategoryBreakdown } from '../../../domain/repositories/ITransactionRepository';
 import { EntityNotFoundError } from '../../../domain/errors';
 import { TransactionMapper, TransactionRow } from '../../mappers/TransactionMapper';
+import { generateUUID } from '../../../shared/utils/uuid';
 
 interface MonthlyTotalRow {
   month: string;
@@ -35,7 +36,7 @@ export class TransactionRepository implements ITransactionRepository {
   }
 
   async create(transaction: CreateTransaction): Promise<Transaction> {
-    const id = crypto.randomUUID();
+    const id = generateUUID();
     const now = new Date();
     const fullTransaction = TransactionSchema.parse({
       ...transaction,

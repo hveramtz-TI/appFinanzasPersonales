@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { SyncQueueItem } from './types';
+import { generateUUID } from '../../shared/utils/uuid';
 
 export class SyncQueueRepository {
   constructor(private db: SQLite.SQLiteDatabase) {}
@@ -10,7 +11,7 @@ export class SyncQueueRepository {
     operation: 'INSERT' | 'UPDATE' | 'DELETE',
     payload: any
   ): Promise<void> {
-    const id = crypto.randomUUID();
+    const id = generateUUID();
     const now = new Date().getTime();
 
     await this.db.runAsync(

@@ -4,6 +4,7 @@ import { TransactionType } from '../../../domain/entities/Transaction';
 import { ICategoryRepository } from '../../../domain/repositories/ICategoryRepository';
 import { EntityNotFoundError } from '../../../domain/errors';
 import { CategoryMapper, CategoryRow } from '../../mappers/CategoryMapper';
+import { generateUUID } from '../../../shared/utils/uuid';
 
 export class CategoryRepository implements ICategoryRepository {
   constructor(private db: SQLite.SQLiteDatabase) {}
@@ -34,7 +35,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async create(category: CreateCategory): Promise<Category> {
-    const id = crypto.randomUUID();
+    const id = generateUUID();
     const now = new Date();
     const fullCategory = CategorySchema.parse({
       ...category,
