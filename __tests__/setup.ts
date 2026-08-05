@@ -50,6 +50,11 @@ jest.mock('react-native-gifted-charts', () => ({
   LineChart: 'LineChart',
 }));
 
+// Mock de react-native-calendars
+jest.mock('react-native-calendars', () => ({
+  Calendar: 'Calendar',
+}));
+
 // Global setup
 global.crypto = {
   randomUUID: () => {
