@@ -51,3 +51,10 @@ export class EmptyFieldError extends DomainError {
     this.name = 'EmptyFieldError';
   }
 }
+
+export class DuplicateReminderPaymentError extends DomainError {
+  constructor(reminderId: string, period: string) {
+    super(`Payment already recorded for reminder ${reminderId} in period ${period}`);
+    this.name = 'DuplicateReminderPaymentError';
+  }
+}

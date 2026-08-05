@@ -7,6 +7,7 @@ export interface TransactionRow {
   type: string;
   categoryId: string;
   accountId: string | null;
+  reminderId: string | null;
   date: number;
   description: string | null;
   tags: string;
@@ -24,6 +25,7 @@ export class TransactionMapper {
       type: transaction.type,
       categoryId: transaction.categoryId,
       accountId: transaction.accountId ?? null,
+      reminderId: transaction.reminderId ?? null,
       date: transaction.date.getTime(),
       description: transaction.description ?? null,
       tags: JSON.stringify(transaction.tags),
@@ -41,6 +43,7 @@ export class TransactionMapper {
       type: TransactionType.parse(row.type),
       categoryId: row.categoryId,
       accountId: row.accountId ?? undefined,
+      reminderId: row.reminderId ?? undefined,
       date: new Date(row.date),
       description: row.description ?? undefined,
       tags: JSON.parse(row.tags ?? '[]'),

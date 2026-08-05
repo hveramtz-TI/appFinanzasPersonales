@@ -49,14 +49,15 @@ export class TransactionRepository implements ITransactionRepository {
     const dbData = TransactionMapper.toDatabase(fullTransaction);
 
     await this.db.runAsync(
-      `INSERT INTO transactions (id, amount, type, categoryId, accountId, date, description, tags, notes, createdAt, updatedAt, deletedAt)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO transactions (id, amount, type, categoryId, accountId, reminderId, date, description, tags, notes, createdAt, updatedAt, deletedAt)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         dbData.id,
         dbData.amount,
         dbData.type,
         dbData.categoryId,
         dbData.accountId,
+        dbData.reminderId,
         dbData.date,
         dbData.description,
         dbData.tags,
@@ -86,7 +87,7 @@ export class TransactionRepository implements ITransactionRepository {
 
     await this.db.runAsync(
       `UPDATE transactions SET
-        amount = ?, type = ?, categoryId = ?, accountId = ?, date = ?,
+        amount = ?, type = ?, categoryId = ?, accountId = ?, reminderId = ?, date = ?,
         description = ?, tags = ?, notes = ?, updatedAt = ?
        WHERE id = ?`,
       [
@@ -94,6 +95,7 @@ export class TransactionRepository implements ITransactionRepository {
         dbData.type,
         dbData.categoryId,
         dbData.accountId,
+        dbData.reminderId,
         dbData.date,
         dbData.description,
         dbData.tags,
@@ -119,6 +121,16 @@ export class TransactionRepository implements ITransactionRepository {
 
   async getByDateRange(dateRange: DateRange): Promise<Transaction[]> {
     return this.getAll({ dateRange });
+  }
+
+  async getByReminderIdAndPeriod(reminderId: string, periodStart: Date, periodEnd: Date): Promise<Transaction[]> {
+    const rows = await this.db.getAllAsync(
+      `SELECT * FROM transactions
+       WHERE reminderId = ? AND date >= ? AND date <= ? AND deletedAt IS NULL
+       ORDER BY date DESC`,
+      [reminderId, periodStart.getTime(), periodEnd.getTime()]
+    ) as TransactionRow[];
+    return rows.map(row => TransactionMapper.fromDatabase(row));
   }
 
   async getMonthlyTotals(year: number): Promise<MonthlyTotal[]> {
