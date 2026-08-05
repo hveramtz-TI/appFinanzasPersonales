@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { DashboardScreen } from '../modules/dashboard';
+import { FinanceStack } from '../modules/finance';
 import { TransactionsScreen } from '../modules/transactions';
 import { RemindersScreen } from '../modules/reminders';
 import { SettingsScreen } from '../modules/settings';
@@ -11,6 +12,7 @@ const Tab = createBottomTabNavigator();
 
 const ICON_MAP: Record<string, { focused: keyof typeof Ionicons.glyphMap; unfocused: keyof typeof Ionicons.glyphMap }> = {
   Dashboard: { focused: 'home', unfocused: 'home-outline' },
+  Finance: { focused: 'analytics', unfocused: 'analytics-outline' },
   Transactions: { focused: 'list', unfocused: 'list-outline' },
   Reminders: { focused: 'notifications', unfocused: 'notifications-outline' },
   Settings: { focused: 'settings', unfocused: 'settings-outline' },
@@ -40,13 +42,18 @@ export function TabNavigator() {
         headerTintColor: theme.text,
       })}
     >
-      <Tab.Screen 
-        name="Dashboard" 
+      <Tab.Screen
+        name="Dashboard"
         component={DashboardScreen}
         options={{ title: 'Inicio' }}
       />
-      <Tab.Screen 
-        name="Transactions" 
+      <Tab.Screen
+        name="Finance"
+        component={FinanceStack}
+        options={{ title: 'Finanzas' }}
+      />
+      <Tab.Screen
+        name="Transactions"
         component={TransactionsScreen}
         options={{ title: 'Transacciones' }}
       />

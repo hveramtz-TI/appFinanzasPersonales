@@ -3,7 +3,7 @@ import {
   ITransactionRepository,
   MonthlyTotal,
   CategoryBreakdown,
-} from '@domain/repositories/ITransactionRepository';
+} from '../../../domain/repositories/ITransactionRepository';
 import { computeTotals, computeVariance } from '../domain';
 import {
   FinanceIndicators,
@@ -64,7 +64,7 @@ function mapMonthlyTotalsToEvolution(
 }
 
 export function useFinanceIndicators(
-  transactionRepo: ITransactionRepository,
+  transactionRepo: ITransactionRepository | null | undefined,
   referenceDate?: Date
 ): FinanceIndicators {
   const resolvedReferenceDate = useMemo(
@@ -76,6 +76,10 @@ export function useFinanceIndicators(
   );
 
   const loadIndicators = useCallback(async () => {
+    if (!transactionRepo) {
+      return;
+    }
+
     setIndicators((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
