@@ -5,12 +5,11 @@ import { useTheme } from '../../../shared/theme';
 import { Text, Card } from '../../../shared/components';
 import { CategoryBreakdown } from '../../../domain/usecases/GetDashboardData';
 import { formatPercentage } from '../../../shared/utils/formatters';
+import { CHART_COLORS } from '../../../shared/constants/business';
 
 interface DashboardPieChartProps {
   data: CategoryBreakdown[];
 }
-
-const CHART_COLORS = ['#2196F3', '#4CAF50', '#FF9800', '#F44336', '#9C27B0', '#00BCD4', '#FFEB3B', '#795548'];
 
 export function DashboardPieChart({ data }: DashboardPieChartProps) {
   const { theme } = useTheme();
@@ -46,19 +45,19 @@ export function DashboardPieChart({ data }: DashboardPieChartProps) {
         />
       </View>
       <View style={styles.legend} accessibilityLabel="Leyenda de categorías">
-        {data.map((item, index) => (
-          <View key={item.categoryId} style={styles.legendItem}>
+        {chartData.map((item, index) => (
+          <View key={data[index].categoryId} style={styles.legendItem}>
             <View
               style={[
                 styles.legendColor,
-                { backgroundColor: CHART_COLORS[index % CHART_COLORS.length] },
+                { backgroundColor: item.color },
               ]}
             />
             <Text variant="caption" style={styles.legendLabel}>
-              {item.categoryName}
+              {item.label}
             </Text>
             <Text variant="caption" color="secondary">
-              {formatPercentage(item.percentage)}
+              {formatPercentage(item.value)}
             </Text>
           </View>
         ))}
