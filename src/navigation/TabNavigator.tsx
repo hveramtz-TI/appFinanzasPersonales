@@ -6,6 +6,7 @@ import { FinanceStack } from '../modules/finance';
 import { TransactionsScreen } from '../modules/transactions';
 import { RemindersScreen } from '../modules/reminders';
 import { SettingsScreen } from '../modules/settings';
+import { InvestmentsStack } from '../modules/investments';
 import { useTheme } from '../shared/theme';
 
 const Tab = createBottomTabNavigator();
@@ -16,6 +17,7 @@ const ICON_MAP: Record<string, { focused: keyof typeof Ionicons.glyphMap; unfocu
   Transactions: { focused: 'list', unfocused: 'list-outline' },
   Reminders: { focused: 'notifications', unfocused: 'notifications-outline' },
   Settings: { focused: 'settings', unfocused: 'settings-outline' },
+  Investments: { focused: 'wallet', unfocused: 'wallet-outline' },
 };
 
 export function TabNavigator() {
@@ -61,6 +63,11 @@ export function TabNavigator() {
         name="Reminders" 
         component={RemindersScreen}
         options={{ title: 'Recordatorios' }}
+      />
+      <Tab.Screen
+        name="Investments"
+        component={InvestmentsStack}
+        options={{ title: 'Inversiones' }}
       />
       <Tab.Screen 
         name="Settings" 

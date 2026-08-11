@@ -3,24 +3,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { InvestmentForm } from '../components/InvestmentForm';
 import { useInvestments } from '../hooks/useInvestments';
-import { Investment, CreateInvestment } from '../../../domain/entities/Investment';
+import { Investment, CreateInvestment, UpdateInvestment } from '../../../domain/entities/Investment';
+import { InvestmentsStackParamList } from '../navigation/InvestmentsStack';
 
-export type InvestmentFormRouteParams = {
-  InvestmentForm: {
-    investment?: Investment;
-  };
-};
+type InvestmentFormRouteProp = RouteProp<InvestmentsStackParamList, 'InvestmentForm'>;
 
 export function InvestmentFormScreen() {
   const navigation = useNavigation();
-  const route = useRoute<RouteProp<InvestmentFormRouteParams, 'InvestmentForm'>>();
-  const { addInvestment } = useInvestments();
+  const route = useRoute<InvestmentFormRouteProp>();
+  const { addInvestment, updateInvestment } = useInvestments();
   const investment = route.params?.investment;
 
   const handleSubmit = async (data: CreateInvestment) => {
-    const investment = await addInvestment(data);
+    if (investment) {
+      const updated = await updateInvestment(investment.id, data as UpdateInvestment);
+      navigation.goBack();
+      return updated;
+    }
+
+    const created = await addInvestment(data);
     navigation.goBack();
-    return investment;
+    return created;
   };
 
   return (

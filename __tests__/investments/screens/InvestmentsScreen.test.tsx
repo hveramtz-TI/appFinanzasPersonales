@@ -59,8 +59,8 @@ describe('InvestmentsScreen', () => {
   });
 
   it('renders type badge and return percentage', async () => {
-    const { getByText } = await renderWithNavigation(<InvestmentsScreen />);
-    expect(getByText('Fondo Mutuo')).toBeTruthy();
+    const { getAllByText, getByText } = await renderWithNavigation(<InvestmentsScreen />);
+    expect(getAllByText('Fondo Mutuo').length).toBeGreaterThanOrEqual(1);
     expect(getByText('Rentabilidad: +5.0%')).toBeTruthy();
   });
 

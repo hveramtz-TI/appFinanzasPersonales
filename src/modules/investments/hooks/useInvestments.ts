@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import * as SQLite from 'expo-sqlite';
-import { Investment, CreateInvestment } from '../../../domain/entities/Investment';
+import { Investment, CreateInvestment, UpdateInvestment } from '../../../domain/entities/Investment';
 import { InvestmentRepository } from '../../../data/local/repositories/InvestmentRepository';
 import { getDatabase } from '../../../data/local/database';
 
@@ -43,6 +43,14 @@ export function useInvestments() {
     return investment;
   };
 
+  const updateInvestment = async (id: string, data: UpdateInvestment) => {
+    if (!investmentRepo) return;
+
+    const updated = await investmentRepo.update(id, data);
+    setInvestments(prev => prev.map(i => i.id === id ? updated : i));
+    return updated;
+  };
+
   const deleteInvestment = async (id: string) => {
     if (!investmentRepo) return;
 
@@ -62,6 +70,7 @@ export function useInvestments() {
     loading,
     error,
     addInvestment,
+    updateInvestment,
     deleteInvestment,
     refresh,
   };
