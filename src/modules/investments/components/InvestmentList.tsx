@@ -8,9 +8,10 @@ import { formatCurrency, formatPercentage } from '../../../shared/utils/formatte
 interface InvestmentListProps {
   investments: Investment[];
   onDelete: (id: string) => void;
+  onWithdraw: (investment: Investment) => void;
 }
 
-export function InvestmentList({ investments, onDelete }: InvestmentListProps) {
+export function InvestmentList({ investments, onDelete, onWithdraw }: InvestmentListProps) {
   const { theme } = useTheme();
 
   const getTypeLabel = (type: InvestmentType) => {
@@ -52,22 +53,33 @@ export function InvestmentList({ investments, onDelete }: InvestmentListProps) {
             </Text>
           </View>
         </View>
-        <View style={styles.footer}>
+        <View style={[styles.footer, { borderTopColor: theme.border }]}>
           <Text
             variant="caption"
             style={{ color: isPositive ? theme.success : theme.error }}
           >
             Rentabilidad: {isPositive ? '+' : ''}{formatPercentage(returnPercentage)}
           </Text>
-          <TouchableOpacity
-            onPress={() => onDelete(item.id)}
-            accessibilityLabel={`Eliminar inversión ${item.name}`}
-            accessibilityHint="Elimina esta inversión de la lista"
-          >
-            <Text variant="caption" color="error">
-              Eliminar
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.actions}>
+            <TouchableOpacity
+              onPress={() => onWithdraw(item)}
+              accessibilityLabel={`Retirar inversión ${item.name}`}
+              accessibilityHint="Abre el modal para retirar fondos de esta inversión"
+            >
+              <Text variant="caption" style={{ color: theme.primary }}>
+                Retirar
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => onDelete(item.id)}
+              accessibilityLabel={`Eliminar inversión ${item.name}`}
+              accessibilityHint="Elimina esta inversión de la lista"
+            >
+              <Text variant="caption" color="error">
+                Eliminar
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Card>
     );
@@ -89,6 +101,7 @@ export function InvestmentList({ investments, onDelete }: InvestmentListProps) {
       renderItem={renderItem}
       keyExtractor={item => item.id}
       contentContainerStyle={styles.list}
+      scrollEnabled={false}
     />
   );
 }
@@ -130,8 +143,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
     paddingTop: 12,
+  },
+  actions: {
+    flexDirection: 'row',
+    gap: 16,
   },
   empty: {
     flex: 1,

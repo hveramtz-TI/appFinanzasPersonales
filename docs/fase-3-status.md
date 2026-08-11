@@ -1,6 +1,6 @@
 # Fase 3 — Estado de implementación
 
-**Última actualización**: 2026-08-05
+**Última actualización**: 2026-08-10
 
 ## Resumen
 
@@ -18,13 +18,14 @@ Implementación de la Fase 3: Inversiones (DP/FM), Mensualidades (evolución de 
 | 3 | InvestmentRepository SQLite | `feature/fase-3/slice-3-investment-repo` | 1 | 152 | ✅ |
 | 4 | Lista inversiones + hooks | `feature/fase-3/slice-4-investments-list` | 4 | 356 | ✅ |
 | 5 | Formulario inversión (DP↔FM) | `feature/fase-3/slice-5-investment-form` | 3 | 488 ⚠️ | ✅ |
-| **Total** | | | **20 commits** | **1.660** | |
+| 6 | Charts + vencimientos DP + retiros | `feature/fase-3/slice-6-charts-withdrawals` | 1 | 738 | ✅ |
+| **Total** | | | **21 commits** | **2.398** | |
 
 ### Cadena de branches
 
 ```
 main → feature/fase-3-tracker
-         └── slice-1 (160 LOC) ──► slice-2a (164) ──► slice-2b (340) ──► slice-3 (152) ──► slice-4 (356) ──► slice-5 (488)
+         └── slice-1 (160 LOC) ──► slice-2a (164) ──► slice-2b (340) ──► slice-3 (152) ──► slice-4 (356) ──► slice-5 (488) ──► slice-6 (738)
 ```
 
 ### Qué contiene cada slice
@@ -65,13 +66,26 @@ main → feature/fase-3-tracker
 - Al cambiar DP↔FM se limpian los campos específicos del tipo anterior
 - Tests de form (DP fields, FM fields, switching, submit)
 
+#### Slice 6 — Charts + vencimientos DP + retiros
+- `InvestmentsPieChart.tsx`: donut chart distribución DP vs FM por `currentValue` con leyenda
+- `InvestmentsLineChart.tsx`: proyección simple (compra → hoy, initialAmount → currentValue)
+- `ProcessMaturedInvestments.ts`: use case — `fixed` crea `Transaction` ingreso, `renewable` crea `Reminder`
+- `WithdrawInvestment.ts`: use case — retiro parcial (reduce `currentValue`) o total (`isActive = false`)
+- `WithdrawModal.tsx`: modal con toggle retiro total/parcial, input de monto, validación
+- `InvestmentsStack.tsx`: stack navigator (`InvestmentsHome` + `InvestmentForm`)
+- `useInvestments` hook: agregado `updateInvestment(id, data)`
+- `InvestmentList`: botón "Retirar", fix `borderTopColor` → `theme.border`
+- `InvestmentsScreen`: fix `borderBottomColor` → `theme.border`, wiring navegación "+" y `WithdrawModal`
+- `InvestmentFormScreen`: usa `updateInvestment` para edición (antes siempre llamaba `add`)
+- `TabNavigator`: nueva tab "Inversiones" con icono `wallet`
+
 ---
 
 ## Slices pendientes ⏳
 
 | # | Slice | LOC est. | Descripción |
 |---|---|---|---|
-| 6 | Charts + vencimientos DP + retiros | ~370 | `InvestmentsPieChart`, `InvestmentsLineChart`, `ProcessMaturedInvestments` use case, retiro parcial/total |
+| 6 | Charts + vencimientos DP + retiros | ~370 | `InvestmentsPieChart`, `InvestmentsLineChart`, `ProcessMaturedInvestments` use case, retiro parcial/total | ✅ |
 | 7 | MonthlyChargesView | ~310 | Vista mensualidades en Finanzas, filtro mes/semana + vencidos, reusa `ReminderList`, total pendiente |
 | 8 | Indicadores + SubTabBar + FinanceScreen | ~350 | `SubTabBar` custom (4 tabs), refactor `FinanceScreen`, indicador Patrimonio, wiring de navegación |
 
@@ -83,7 +97,7 @@ main → feature/fase-3-tracker
 |---|---|---|
 | `npx tsc --noEmit` | ✅ | Todos los slices |
 | `npm test` (main) | 51 tests, 17 suites | — |
-| `npm test` (slice-5) | 71+ tests, 22+ suites | Slice 5 incluye tests de todos los anteriores |
+| `npm test` (slice-6) | 71 tests, 22 suites | Slice 6 incluye tests de todos los anteriores |
 
 ---
 
@@ -117,9 +131,8 @@ main → feature/fase-3-tracker
 
 ## Próximos pasos
 
-1. Continuar con **Slice 6** — Charts + vencimientos DP + retiros (~370 LOC)
-2. **Slice 7** — MonthlyChargesView (~310 LOC)  
-3. **Slice 8** — Indicadores + SubTabBar + FinanceScreen refactor (~350 LOC)
-4. Mergear cadena de PRs al tracker `feature/fase-3-tracker`
-5. `sdd-verify` de Fase 3 completa
-6. `sdd-archive`
+1. **Slice 7** — MonthlyChargesView (~310 LOC)  
+2. **Slice 8** — Indicadores + SubTabBar + FinanceScreen refactor (~350 LOC)
+3. Mergear cadena de PRs al tracker `feature/fase-3-tracker`
+4. `sdd-verify` de Fase 3 completa
+5. `sdd-archive`
