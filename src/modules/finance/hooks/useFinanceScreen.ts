@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import * as SQLite from 'expo-sqlite';
 import { TransactionRepository } from '../../../data/local/repositories/TransactionRepository';
+import { InvestmentRepository } from '../../../data/local/repositories/InvestmentRepository';
 import { getDatabase } from '../../../data/local/database';
 import { ITransactionRepository } from '../../../domain/repositories/ITransactionRepository';
+import { IInvestmentRepository } from '../../../domain/repositories/IInvestmentRepository';
 import { useFinanceIndicators } from './useFinanceIndicators';
 
 export function useFinanceScreen() {
@@ -12,6 +14,11 @@ export function useFinanceScreen() {
 
   const transactionRepo = useMemo<ITransactionRepository | null>(
     () => (db ? new TransactionRepository(db) : null),
+    [db]
+  );
+
+  const investmentRepo = useMemo<IInvestmentRepository | null>(
+    () => (db ? new InvestmentRepository(db) : null),
     [db]
   );
 
@@ -38,6 +45,8 @@ export function useFinanceScreen() {
 
   return {
     ...indicators,
+    transactionRepo,
+    investmentRepo,
     isInitializing,
     initError: error,
   };

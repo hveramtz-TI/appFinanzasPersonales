@@ -20,13 +20,14 @@ Implementación de la Fase 3: Inversiones (DP/FM), Mensualidades (evolución de 
 | 5 | Formulario inversión (DP↔FM) | `feature/fase-3/slice-5-investment-form` | 3 | 488 ⚠️ | ✅ |
 | 6 | Charts + vencimientos DP + retiros | `feature/fase-3/slice-6-charts-withdrawals` | 1 | 738 | ✅ |
 | 7 | MonthlyChargesView | `feature/fase-3/slice-7-monthly-charges` | 1 | 477 | ✅ |
-| **Total** | | | **22 commits** | **2.875** | |
+| 8 | SubTabBar + NetWorth + refactor | `feature/fase-3/slice-8-subtabbar-patrimonio` | 1 | 698 | ✅ |
+| **Total** | | | **23 commits** | **3.573** | |
 
 ### Cadena de branches
 
 ```
 main → feature/fase-3-tracker
-         └── slice-1 (160 LOC) ──► slice-2a (164) ──► slice-2b (340) ──► slice-3 (152) ──► slice-4 (356) ──► slice-5 (488) ──► slice-6 (738) ──► slice-7 (477)
+         └── slice-1 (160) ──► slice-2a (164) ──► slice-2b (340) ──► slice-3 (152) ──► slice-4 (356) ──► slice-5 (488) ──► slice-6 (738) ──► slice-7 (477) ──► slice-8 (698)
 ```
 
 ### Qué contiene cada slice
@@ -87,13 +88,24 @@ main → feature/fase-3-tracker
 - `FinanceStack.tsx`: nueva ruta `MonthlyCharges`
 - Spec: `docs/specs/slice-7-monthly-charges.md`
 
+#### Slice 8 — SubTabBar + NetWorth + refactor
+- `SubTabBar.tsx`: 4 tabs sin swipe (Resumen, Ingresos, Mensualidades, Patrimonio)
+- `NetWorthView.tsx`: patrimonio neto = balance acumulado + inversiones, con breakdown y chart
+- `IncomeView.tsx`: contenido de IncomeScreen extraído como componente standalone
+- `FinanceScreen.tsx`: refactor con SubTabBar + switch de contenido, DB compartida
+- `IncomeScreen.tsx`: refactor para usar IncomeView internamente
+- `useFinanceScreen.ts`: expone `transactionRepo` + `investmentRepo`
+- `FinanceStack.tsx`: simplificado a solo `FinanceHome`
+
 ---
 
 ## Slices pendientes ⏳
 
+**¡Fase 3 completada!** ✅ Los 8 slices están implementados.
+
 | # | Slice | LOC est. | Descripción |
 |---|---|---|---|
-| 8 | Indicadores + SubTabBar + FinanceScreen | ~350 | `SubTabBar` custom (4 tabs), refactor `FinanceScreen`, indicador Patrimonio, wiring de navegación |
+| 8 | Indicadores + SubTabBar + FinanceScreen | ~350 | `SubTabBar` custom (4 tabs), refactor `FinanceScreen`, indicador Patrimonio, wiring de navegación | ✅ |
 
 ---
 
