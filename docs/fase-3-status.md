@@ -19,13 +19,14 @@ Implementación de la Fase 3: Inversiones (DP/FM), Mensualidades (evolución de 
 | 4 | Lista inversiones + hooks | `feature/fase-3/slice-4-investments-list` | 4 | 356 | ✅ |
 | 5 | Formulario inversión (DP↔FM) | `feature/fase-3/slice-5-investment-form` | 3 | 488 ⚠️ | ✅ |
 | 6 | Charts + vencimientos DP + retiros | `feature/fase-3/slice-6-charts-withdrawals` | 1 | 738 | ✅ |
-| **Total** | | | **21 commits** | **2.398** | |
+| 7 | MonthlyChargesView | `feature/fase-3/slice-7-monthly-charges` | 1 | 477 | ✅ |
+| **Total** | | | **22 commits** | **2.875** | |
 
 ### Cadena de branches
 
 ```
 main → feature/fase-3-tracker
-         └── slice-1 (160 LOC) ──► slice-2a (164) ──► slice-2b (340) ──► slice-3 (152) ──► slice-4 (356) ──► slice-5 (488) ──► slice-6 (738)
+         └── slice-1 (160 LOC) ──► slice-2a (164) ──► slice-2b (340) ──► slice-3 (152) ──► slice-4 (356) ──► slice-5 (488) ──► slice-6 (738) ──► slice-7 (477)
 ```
 
 ### Qué contiene cada slice
@@ -79,14 +80,19 @@ main → feature/fase-3-tracker
 - `InvestmentFormScreen`: usa `updateInvestment` para edición (antes siempre llamaba `add`)
 - `TabNavigator`: nueva tab "Inversiones" con icono `wallet`
 
+#### Slice 7 — MonthlyChargesView
+- `useMonthlyCharges.ts`: hook con filtro (`month`/`week`/`overdue`), `totalPending`, `overdueCount`
+- `MonthlyChargesView.tsx`: filter pills + card total pendiente + reuso de `ReminderList`
+- `MonthlyChargesScreen.tsx`: SafeAreaView wrapper
+- `FinanceStack.tsx`: nueva ruta `MonthlyCharges`
+- Spec: `docs/specs/slice-7-monthly-charges.md`
+
 ---
 
 ## Slices pendientes ⏳
 
 | # | Slice | LOC est. | Descripción |
 |---|---|---|---|
-| 6 | Charts + vencimientos DP + retiros | ~370 | `InvestmentsPieChart`, `InvestmentsLineChart`, `ProcessMaturedInvestments` use case, retiro parcial/total | ✅ |
-| 7 | MonthlyChargesView | ~310 | Vista mensualidades en Finanzas, filtro mes/semana + vencidos, reusa `ReminderList`, total pendiente |
 | 8 | Indicadores + SubTabBar + FinanceScreen | ~350 | `SubTabBar` custom (4 tabs), refactor `FinanceScreen`, indicador Patrimonio, wiring de navegación |
 
 ---
@@ -97,7 +103,7 @@ main → feature/fase-3-tracker
 |---|---|---|
 | `npx tsc --noEmit` | ✅ | Todos los slices |
 | `npm test` (main) | 51 tests, 17 suites | — |
-| `npm test` (slice-6) | 71 tests, 22 suites | Slice 6 incluye tests de todos los anteriores |
+| `npm test` (slice-7) | 71 tests, 22 suites | Slice 7 incluye tests de todos los anteriores |
 
 ---
 
