@@ -73,6 +73,6 @@ describe('FinanceScreen', () => {
     expect(getByText('Finanzas')).toBeTruthy();
     expect(getByText('Balance')).toBeTruthy();
     expect(getByText('Top gastos')).toBeTruthy();
-    expect(getByText('Ver evolución de ingresos')).toBeTruthy();
+    expect(getByText('Patrimonio')).toBeTruthy();
   });
 });

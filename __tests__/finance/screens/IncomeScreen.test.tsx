@@ -87,7 +87,7 @@ describe('IncomeScreen', () => {
       <IncomeScreen />
     );
 
-    expect(getByText('Evolución de ingresos')).toBeTruthy();
+    expect(getByText('Evolución mensual')).toBeTruthy();
     expect(getByText('Total')).toBeTruthy();
     expect(getByText('Transacciones')).toBeTruthy();
     expect(getByText('Promedio')).toBeTruthy();
